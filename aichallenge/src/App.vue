@@ -1,85 +1,95 @@
-<script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-  </header>
-
-  <RouterView />
+  <div>
+    <form v-on:submit.prevent="addNewTodo">
+      <label for="new-todo">Eine Person hinzufügen</label>
+      <input
+        type="text"
+        v-model="newTodoText"
+        id="new-todo"
+        placeholder="Max Mustermann"
+      />
+      <button>Hinzufügen</button>
+    </form>
+    <ul>
+      <list
+        v-for="(todo, index) in persons"
+        :key="todo.id"
+        :title="todo.title"
+        @remove="todos.splice(index, 1)"
+      ></list>
+    </ul>
+    <CalculateWinners
+    @calculate="calculateWinners"/>
+  </div>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
+<script>
+import CalculateWinners from "./components/CalculateWinners.vue";
+import List from "./components/List.vue";
+import calculateWinners from "@/components/CalculateWinners.vue";
+export default {
+  name: "App",
+  components: {
+    List: List,
+    CalculateWinners: CalculateWinners,
+  },
+  data() {
+    return {
+      newTodoText: "",
+      persons: [
+      ],
+      nextTodoId: 1,
+    };
+  },
+  methods: {
+    calculateWinners() {
+      alert('test')
+    },
+    addNewTodo() {
+      this.persons.push({
+        id: this.nextTodoId++,
+        title: this.newTodoText,
+      });
+      this.newTodoText = "";
+    },
+  },
+};
+</script>
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-nav {
-  width: 100%;
-  font-size: 12px;
+<style>
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  margin-top: 2rem;
+  color: black;
+  margin-top: 60px;
+
 }
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
+button {
+  background-color: #42b983;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
 }
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
+input {
+  padding: 10px;
+  margin: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 200px;
 }
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
+body {
+  background-color:white;
 }
-
-nav a:first-of-type {
-  border: 0;
+ul {
+  list-style-type: none;
+  padding: 20px 0;
 }
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
+li {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
 }
 </style>
