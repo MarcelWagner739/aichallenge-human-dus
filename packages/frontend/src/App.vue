@@ -1,5 +1,6 @@
 <template>
     <div>
+        <h1>Gewinnerziehung</h1>
         <form v-on:submit.prevent="addNewTodo">
             <label for="new-todo">Eine Person hinzufügen</label>
             <input
