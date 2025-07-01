@@ -20,6 +20,15 @@
         </ul>
         <CalculateWinners
             @calculate="calculateWinners"/>
+
+        <div>
+            die Gewinner heißen
+            <div
+                v-for="(winner, index) in winnerList">
+                Gewinner: {{ winner.people.map(p => p.title).join(', ') }}
+                Datum: {{ winner.timestamp }}
+            </div>
+        </div>
     </div>
 </template>
 
@@ -61,7 +70,7 @@ export default {
             return winners;
         },
         calculateWinners() {
-            this.winnerList.push([selectWinners(this.persons, 2), (new Date()).toLocaleString()]);
+            this.winnerList.push({people:this.selectWinners(this.persons, 2), timestamp:(new Date()).toLocaleString()});
             console.log(this.winnerList);
         },
         addNewTodo() {
