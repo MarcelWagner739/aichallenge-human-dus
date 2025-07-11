@@ -13,10 +13,10 @@
         </form>
         <ul>
             <list
-                v-for="(todo, index) in persons"
-                :key="todo.id"
-                :title="todo.title"
-                @remove="todos.splice(index, 1)"
+                v-for="(person, index) in persons"
+                :key="person.id"
+                :title="person.title"
+                @remove="persons.splice(index, 1)"
             ></list>
         </ul>
         <CalculateWinners
@@ -25,7 +25,7 @@
         <div>
             die Gewinner heißen
             <div
-                v-for="(winner, index) in winnerList">
+                v-for="(winner) in winnerList">
                 Gewinner: {{ winner.people.map(p => p.title).join(', ') }}
                 Datum: {{ winner.timestamp }}
             </div>
@@ -36,7 +36,6 @@
 <script>
 import CalculateWinners from "./components/CalculateWinners.vue";
 import List from "./components/List.vue";
-import calculateWinners from "@/components/CalculateWinners.vue";
 
 export default {
     name: "App",
@@ -86,7 +85,7 @@ export default {
 </script>
 
 <style>
-#app {
+body {
     font-family: Avenir, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
